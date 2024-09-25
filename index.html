@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shito Morales y su Grupo Tóxico</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>
+      <span class="3d-text">Shito Morales</span>
+      <span class="3d-text">y su Grupo Tóxico</span>
+    </h1>
+    <nav>
+      <ul>
+        <li><a href="#" id="home-link">Inicio</a></li>
+        <li><a href="#" id="hours-registration-link">Registro de Horas</a></li>
+        <li><a href="#" id="advance-payments-link">Pagos Anticipados</a></li>
+        <li><a href="#" id="weekly-summary-link">Resumen Semanal</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="page">
+      <div class="3d-box">
+        <h2 class="3d-text">¡Hola Omarcito!</h2>
+        <p>Espero que te vaya de lo mejor. Recuerda que las drogas son malas, ¡ya no las uses!</p>
+        <p>Aquí podrás llevar un control de las horas trabajadas y los pagos anticipados de los miembros del grupo.</p>
+      </div>
+    </section>
+
+    <section id="hours-registration" class="page hidden">
+      <div class="3d-box">
+        <h2 class="3d-text">Registro de Horas Trabajadas</h2>
+        <form id="hours-form">
+          <label for="member-name">Nombre del Miembro:</label>
+          <input type="text" id="member-name" name="member-name" required>
+
+          <label for="hours-worked">Horas Trabajadas:</label>
+          <input type="number" id="hours-worked" name="hours-worked" min="0" required>
+
+          <label for="work-date">Fecha de Trabajo:</label>
+          <input type="date" id="work-date" name="work-date" required>
+
+          <label for="event-location">Lugar del Evento:</label>
+          <input type="text" id="event-location" name="event-location" required>
+
+          <button type="submit">Registrar Horas</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="advance-payments" class="page hidden">
+      <div class="3d-box">
+        <h2 class="3d-text">Pagos Anticipados</h2>
+        <form id="advance-payments-form">
+          <label for="member-name-advance">Nombre del Miembro:</label>
+          <input type="text" id="member-name-advance" name="member-name-advance" required>
+
+          <label for="advance-amount">Monto del Pago Anticipado:</label>
+          <input type="number" id="advance-amount" name="advance-amount" min="0" required>
+
+          <label for="advance-date">Fecha del Pago:</label>
+          <input type="date" id="advance-date" name="advance-date" required>
+
+          <button type="submit">Registrar Pago Anticipado</button>
+        </form>
+        <div id="advance-payment-success" class="success-message hidden">
+          <p>¡Pago anticipado registrado con éxito!</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="weekly-summary" class="page hidden">
+      <div class="3d-box">
+        <h2 class="3d-text">Resumen Semanal</h2>
+        <div id="weekly-summary-content"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Shito Morales y su Grupo Tóxico. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Agrega los scripts de Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
