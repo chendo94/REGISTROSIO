@@ -1,93 +1,109 @@
-/* Estilos generales */
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    padding: 20px;
-    background-color: #f5f5f5;
+const members = JSON.parse(localStorage.getItem('members')) || [];
+const records = JSON.parse(localStorage.getItem('records')) || [];
+
+// Muestra la sección seleccionada y oculta las demás
+function showSection(sectionId) {
+    document.querySelectorAll('.page-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    document.getElementById(sectionId).style.display = 'block';
 }
 
-h1 {
-    color: #333;
-    font-size: 1.5em;
-    text-align: center;
-}
+// Función para agregar un miembro al grupo
+function addMember() {
+    const name = document.getElementById('memberName').value;
+    const surname = document.getElementById('memberSurname').value;
+    const rate = parseFloat(document.getElementById('memberRate').value);
 
-/* Menú de navegación */
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-    justify-content: center;
-}
-
-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1em;
-    flex: 1 1 auto;
-    min-width: 120px;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-/* Secciones de contenido */
-.page-section {
-    display: none; /* Oculta todas las secciones por defecto */
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    width: 100%;
-    max-width: 500px;
-    margin: 10px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.page-section input, 
-.page-section select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    font-size: 1em;
-}
-
-#summary {
-    margin-top: 10px;
-    text-align: left;
-}
-
-/* Ajustes específicos para dispositivos móviles */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 1.2em;
-    }
-    
-    button {
-        font-size: 0.9em;
-        padding: 8px;
-        min-width: 100px;
-    }
-
-    .page-section {
-        padding: 10px;
-    }
-    
-    .page-section input, 
-    .page-section select {
-        font-size: 0.9em;
+    if (name && surname && rate) {
+        const member = { id: members.length + 1, name, surname, rate };
+        members.push(member);
+        localStorage.setItem('members', JSON.stringify(members)); // Guardar en localStorage
+        updateMemberSelects();
+        alert('Miembro agregado exitosamente');
+    } else {
+        alert('Por favor, complete todos los campos.');
     }
 }
+
+// Función para actualizar los selects de los miembros
+function updateMemberSelects() {
+    const memberSelect = document.getElementById('memberSelect');
+    const advanceMemberSelect = document.getElementById('advanceMemberSelect');
+    memberSelect.innerHTML = '';
+    advanceMemberSelect.innerHTML = '';
+
+    members.forEach(member => {
+        const option = new Option(`${member.name} ${member.surname}`, member.id);
+        memberSelect.add(option);
+        advanceMemberSelect.add(option.cloneNode(true));
+    });
+}
+
+// Función para registrar horas trabajadas
+function registerHours() {
+    const memberId = parseInt(document.getElementById('memberSelect').value);
+    const hoursWorked = parseFloat(document.getElementById('hoursWorked').value);
+    const workDate = document.getElementById('workDate').value;
+    const workLocation = document.getElementById('workLocation').value;
+
+    if (memberId && hoursWorked && workDate && workLocation) {
+        records.push({ memberId, hoursWorked, workDate, workLocation, type: 'work' });
+        localStorage.setItem('records', JSON.stringify(records)); // Guardar registros en localStorage
+        alert('Horas registradas exitosamente');
+    } else {
+        alert('Por favor, complete todos los campos.');
+    }
+}
+
+// Función para registrar anticipos
+function registerAdvance() {
+    const memberId = parseInt(document.getElementById('advanceMemberSelect').value);
+    const advanceAmount = parseFloat(document.getElementById('advanceAmount').value);
+
+    if (memberId && advanceAmount) {
+        records.push({ memberId, advanceAmount, type: 'advance' });
+        localStorage.setItem('records', JSON.stringify(records)); // Guardar registros en localStorage
+        alert('Anticipo registrado exitosamente');
+    } else {
+        alert('Por favor, complete todos los campos.');
+    }
+}
+
+// Función para generar el resumen semanal
+function generateWeeklySummary() {
+    const summaryDiv = document.getElementById('summary');
+    summaryDiv.innerHTML = '';
+    members.forEach(member => {
+        const memberRecords = records.filter(record => record.memberId === member.id);
+        const totalHours = memberRecords.filter(record => record.type === 'work').reduce((sum, record) => sum + record.hoursWorked, 0);
+        const totalAdvance = memberRecords.filter(record => record.type === 'advance').reduce((sum, record) => sum + record.advanceAmount, 0);
+        const totalPay = totalHours * member.rate - totalAdvance;
+
+        const memberSummary = `
+            <h3>${member.name} ${member.surname}</h3>
+            <p>Horas trabajadas: ${totalHours}</p>
+            <p>Pago por hora: $${member.rate} MXN</p>
+            <p>Anticipos: $${totalAdvance} MXN</p>
+            <p>Total a pagar: $${totalPay} MXN</p>
+            <hr>
+        `;
+        summaryDiv.innerHTML += memberSummary;
+    });
+}
+
+// Función para restablecer solo los registros de horas y anticipos
+function resetRecords() {
+    if (confirm("¿Estás seguro de que deseas restablecer los registros de horas y anticipos?")) {
+        records.length = 0; // Vaciar el array de registros
+        localStorage.setItem('records', JSON.stringify(records)); // Guardar los registros vacíos en localStorage
+        document.getElementById('summary').innerHTML = '';  // Limpiar el resumen semanal
+        alert("Los registros de horas y anticipos han sido restablecidos.");
+    }
+}
+
+// Muestra la sección de agregar miembro por defecto
+showSection('add-member-section');
+
+// Cargar los selects con los miembros existentes en localStorage
+updateMemberSelects();
