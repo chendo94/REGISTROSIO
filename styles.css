@@ -1,83 +1,93 @@
 /* Estilos generales */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
 }
 
-header, footer {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
+h1 {
+    color: #333;
+    font-size: 1.5em;
+    text-align: center;
 }
 
-nav ul {
-  list-style-type: none;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-}
-
-nav li {
-  margin: 0 10px;
-}
-
-nav a {
-  color: #fff;
-  text-decoration: none;
-}
-
-main {
-  padding: 20px;
-}
-
-/* Estilos 3D */
-.3d-text {
-  display: inline-block;
-  font-size: 2rem;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  transform: translateZ(20px);
-}
-
-.3d-box {
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  padding: 20px;
-  border-radius: 8px;
-  transform-style: preserve-3d;
-  transform: translateZ(10px);
-}
-
-/* Estilos del formulario */
-form {
-  display: grid;
-  grid-gap: 10px;
-}
-
-input, button {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* Menú de navegación */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
 }
 
 button {
-  background-color: #333;
-  color: #fff;
-  cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    flex: 1 1 auto;
+    min-width: 120px;
 }
 
-/* Estilos del mensaje de éxito */
-.success-message {
-  background-color: #4CAF50;
-  color: #fff;
-  padding: 10px;
-  border-radius: 4px;
-  text-align: center;
+button:hover {
+    background-color: #0056b3;
 }
 
-.hidden {
-  display: none;
+/* Secciones de contenido */
+.page-section {
+    display: none; /* Oculta todas las secciones por defecto */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    width: 100%;
+    max-width: 500px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.page-section input, 
+.page-section select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+#summary {
+    margin-top: 10px;
+    text-align: left;
+}
+
+/* Ajustes específicos para dispositivos móviles */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.2em;
+    }
+    
+    button {
+        font-size: 0.9em;
+        padding: 8px;
+        min-width: 100px;
+    }
+
+    .page-section {
+        padding: 10px;
+    }
+    
+    .page-section input, 
+    .page-section select {
+        font-size: 0.9em;
+    }
 }

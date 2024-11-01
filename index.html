@@ -1,93 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shito Morales y su Grupo Tóxico</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Horas y Cobros del Grupo Musical</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>
-      <span class="3d-text">Shito Morales</span>
-      <span class="3d-text">y su Grupo Tóxico</span>
-    </h1>
+    <h1>Registro de Horas y Cobros del Grupo Musical</h1>
+
+    <!-- Menú de navegación para cambiar de "página" -->
     <nav>
-      <ul>
-        <li><a href="#" id="home-link">Inicio</a></li>
-        <li><a href="#" id="hours-registration-link">Registro de Horas</a></li>
-        <li><a href="#" id="advance-payments-link">Pagos Anticipados</a></li>
-        <li><a href="#" id="weekly-summary-link">Resumen Semanal</a></li>
-      </ul>
-    </nav>
-  </header>
+        <button onclick="showSection('add-member-section')">Agregar Miembro</button>
+        <button onclick="showSection('register-hours-section')">Registrar Horas</button>
+        <button onclick="showSection('register-advance-section')">Registrar Anticipo</button>
+        <button onclick="showSection('weekly-summary')">Resumen Semanal</button>
+       <button onclick="resetAllRecords()">Restablecer Registros</button>
 
-  <main>
-    <section id="home" class="page">
-      <div class="3d-box">
-        <h2 class="3d-text">¡Hola Omarcito!</h2>
-        <p>Espero que te vaya de lo mejor. Recuerda que las drogas son malas, ¡ya no las uses!</p>
-        <p>Aquí podrás llevar un control de las horas trabajadas y los pagos anticipados de los miembros del grupo.</p>
-      </div>
+
+    <!-- Sección para agregar miembro -->
+    <section id="add-member-section" class="page-section">
+        <h2>Agregar Miembro</h2>
+        <input type="text" id="memberName" placeholder="Nombre">
+        <input type="text" id="memberSurname" placeholder="Apellido">
+        <input type="number" id="memberRate" placeholder="Pago por hora (MXN)">
+        <button onclick="addMember()">Agregar Miembro</button>
     </section>
 
-    <section id="hours-registration" class="page hidden">
-      <div class="3d-box">
-        <h2 class="3d-text">Registro de Horas Trabajadas</h2>
-        <form id="hours-form">
-          <label for="member-name">Nombre del Miembro:</label>
-          <input type="text" id="member-name" name="member-name" required>
-
-          <label for="hours-worked">Horas Trabajadas:</label>
-          <input type="number" id="hours-worked" name="hours-worked" min="0" required>
-
-          <label for="work-date">Fecha de Trabajo:</label>
-          <input type="date" id="work-date" name="work-date" required>
-
-          <label for="event-location">Lugar del Evento:</label>
-          <input type="text" id="event-location" name="event-location" required>
-
-          <button type="submit">Registrar Horas</button>
-        </form>
-      </div>
+    <!-- Sección para registrar horas -->
+    <section id="register-hours-section" class="page-section">
+        <h2>Registrar Horas</h2>
+        <select id="memberSelect"></select>
+        <input type="number" id="hoursWorked" placeholder="Horas trabajadas">
+        <input type="date" id="workDate">
+        <input type="text" id="workLocation" placeholder="Lugar del evento">
+        <button onclick="registerHours()">Registrar Horas</button>
     </section>
 
-    <section id="advance-payments" class="page hidden">
-      <div class="3d-box">
-        <h2 class="3d-text">Pagos Anticipados</h2>
-        <form id="advance-payments-form">
-          <label for="member-name-advance">Nombre del Miembro:</label>
-          <input type="text" id="member-name-advance" name="member-name-advance" required>
-
-          <label for="advance-amount">Monto del Pago Anticipado:</label>
-          <input type="number" id="advance-amount" name="advance-amount" min="0" required>
-
-          <label for="advance-date">Fecha del Pago:</label>
-          <input type="date" id="advance-date" name="advance-date" required>
-
-          <button type="submit">Registrar Pago Anticipado</button>
-        </form>
-        <div id="advance-payment-success" class="success-message hidden">
-          <p>¡Pago anticipado registrado con éxito!</p>
-        </div>
-      </div>
+    <!-- Sección para registrar anticipo -->
+    <section id="register-advance-section" class="page-section">
+        <h2>Registrar Anticipo</h2>
+        <select id="advanceMemberSelect"></select>
+        <input type="number" id="advanceAmount" placeholder="Monto anticipado (MXN)">
+        <button onclick="registerAdvance()">Registrar Anticipo</button>
     </section>
 
-    <section id="weekly-summary" class="page hidden">
-      <div class="3d-box">
-        <h2 class="3d-text">Resumen Semanal</h2>
-        <div id="weekly-summary-content"></div>
-      </div>
+    <!-- Sección de resumen semanal -->
+    <section id="weekly-summary" class="page-section">
+        <h2>Resumen Semanal</h2>
+        <button onclick="generateWeeklySummary()">Generar Resumen</button>
+        <div id="summary"></div>
     </section>
-  </main>
 
-  <footer>
-    <p>&copy; 2023 Shito Morales y su Grupo Tóxico. Todos los derechos reservados.</p>
-  </footer>
-
-  <!-- Agrega los scripts de Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-  <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
